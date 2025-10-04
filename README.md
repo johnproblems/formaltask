@@ -44,10 +44,10 @@ CCPM (Claude Code Project Manager) is a project management system that runs enti
 
 ```bash
 # Clone this enhanced fork
-git clone -b enhancements https://github.com/johnproblems/ccpm.git /tmp/ccpm-enhanced
+git clone -b enhancements https://github.com/johnproblems/formaltask.git /tmp/formaltask-enhanced
 
 # Run installer
-bash /tmp/ccpm-enhanced/install.sh
+bash /tmp/formaltask-enhanced/install.sh
 
 # Verify installation
 /pm:help
@@ -57,18 +57,18 @@ bash /tmp/ccpm-enhanced/install.sh
 
 ```bash
 # 1. Clone to temporary directory
-git clone -b enhancements https://github.com/johnproblems/ccpm.git /tmp/ccpm-enhanced
+git clone -b enhancements https://github.com/johnproblems/formaltask.git /tmp/formaltask-enhanced
 
 # 2. Copy to your project's .claude directory
-cp -r /tmp/ccpm-enhanced/.claude/commands/pm /path/to/your/project/.claude/commands/
-cp -r /tmp/ccpm-enhanced/.claude/scripts/pm /path/to/your/project/.claude/scripts/
-cp -r /tmp/ccpm-enhanced/.claude/docs /path/to/your/project/.claude/
+cp -r /tmp/formaltask-enhanced/.claude/commands/pm /path/to/your/project/.claude/commands/
+cp -r /tmp/formaltask-enhanced/.claude/scripts/pm /path/to/your/project/.claude/scripts/
+cp -r /tmp/formaltask-enhanced/.claude/docs /path/to/your/project/.claude/
 
 # 3. Make scripts executable
 chmod +x /path/to/your/project/.claude/scripts/pm/*.sh
 
 # 4. (Optional) Install VSCode extension
-cd /tmp/ccpm-enhanced/vscode-extension
+cd /tmp/formaltask-enhanced/vscode-extension
 npm install
 npm run compile
 code --install-extension ccpm-monitor-*.vsix
@@ -396,11 +396,13 @@ Pull requests welcome! Please:
 
 ## License
 
-Same as original CCPM - see LICENSE file
+MIT License - Copyright (c) 2025 Ran Aroussi (Original CCPM) & FormalHosting (Enhancements)
+
+See [LICENSE](LICENSE) file for full details.
 
 ## Support
 
-- **Issues**: https://github.com/johnproblems/ccpm/issues
+- **Issues**: https://github.com/johnproblems/formaltask/issues
 - **Discussions**: Use GitHub Discussions
 - **Original CCPM**: https://github.com/automazeio/ccpm
 
