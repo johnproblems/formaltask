@@ -1,494 +1,415 @@
-# Claude Code PM
+# CCPM Enhanced - Claude Code Project Manager
 
-[![Automaze](https://img.shields.io/badge/By-automaze.io-4b3baf)](https://automaze.io)
-&nbsp;
-[![Claude Code](https://img.shields.io/badge/+-Claude%20Code-d97757)](https://github.com/automazeio/ccpm/blob/main/README.md)
-[![GitHub Issues](https://img.shields.io/badge/+-GitHub%20Issues-1f2328)](https://github.com/automazeio/ccpm)
-&nbsp;
-[![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code?tab=readme-ov-file#general-)
-&nbsp;
-[![MIT License](https://img.shields.io/badge/License-MIT-28a745)](https://github.com/automazeio/ccpm/blob/main/LICENSE)
-&nbsp;
-[![Follow on 𝕏](https://img.shields.io/badge/𝕏-@aroussi-1c9bf0)](http://x.com/intent/follow?screen_name=aroussi)
-&nbsp;
-[![Star this repo](https://img.shields.io/github/stars/automazeio/ccpm.svg?style=social&label=Star%20this%20repo&maxAge=60)](https://github.com/automazeio/ccpm)
+> **Enhanced fork** of [automazeio/ccpm](https://github.com/automazeio/ccpm) with advanced task management, GitHub label automation, and VSCode integration.
 
-### Claude Code workflow to ship ~~faster~~ _better_ using spec-driven development, GitHub issues, Git worktrees, and multiple AI agents running in parallel.
+## What is This?
 
-**[中文文档 (Chinese Documentation)](zh-docs/README_ZH.md)**
+CCPM (Claude Code Project Manager) is a project management system that runs entirely within Claude Code using slash commands. This fork adds powerful enhancements for real-world development workflows.
 
-Stop losing context. Stop blocking on tasks. Stop shipping bugs. This battle-tested system turns PRDs into epics, epics into GitHub issues, and issues into production code – with full traceability at every step.
+## Enhancements in This Fork
 
-![Claude Code PM](screenshot.webp)
+### 🎯 Dynamic Task Management
+- **Add tasks mid-epic** when issues arise during development
+- Interactive prompts for task details (no complex flags)
+- Automatic GitHub issue creation with proper numbering
+- Dependency tracking and validation
 
-## Table of Contents
+### 🏷️ Automated GitHub Labels
+- **Auto-manages 8 label types**: epic, task, in-progress, completed, blocked, pending, epic-specific, enhancement
+- Labels update automatically based on task state
+- Visual workflow on GitHub (filter by label to see status)
+- **Pending label** auto-moves to next available task
 
-- [Background](#background)
-- [The Workflow](#the-workflow)
-- [What Makes This Different?](#what-makes-this-different)
-- [Why GitHub Issues?](#why-github-issues)
-- [Core Principle: No Vibe Coding](#core-principle-no-vibe-coding)
-- [System Architecture](#system-architecture)
-- [Workflow Phases](#workflow-phases)
-- [Command Reference](#command-reference)
-- [The Parallel Execution System](#the-parallel-execution-system)
-- [Key Features & Benefits](#key-features--benefits)
-- [Proven Results](#proven-results)
-- [Example Flow](#example-flow)
-- [Get Started Now](#get-started-now)
-- [Local vs Remote](#local-vs-remote)
-- [Technical Notes](#technical-notes)
-- [Support This Project](#support-this-project)
+### ✅ Smart Auto-Completion
+- Tasks auto-close when reaching 100% progress
+- No manual completion needed
+- Automatic label updates and dependency unblocking
 
-## Background
+### 📊 Beautiful Monitoring
+- **Terminal UI** with box-drawing and progress bars
+- Real-time status from GitHub labels
+- Color-coded task icons (🟢🟡🔴⏭️⚪)
+- Shows progress % and last sync time
 
-Every team struggles with the same problems:
-- **Context evaporates** between sessions, forcing constant re-discovery
-- **Parallel work creates conflicts** when multiple developers touch the same code
-- **Requirements drift** as verbal decisions override written specs
-- **Progress becomes invisible** until the very end
+### 🔧 VSCode Extension (Designed & Ready to Implement)
+- Tree view with epics and tasks
+- Progress notes panel with AI summarization
+- Status bar integration
+- Desktop notifications
+- One-click actions
 
-This system solves all of that.
+## Installation
 
-## The Workflow
-
-```mermaid
-graph LR
-    A[PRD Creation] --> B[Epic Planning]
-    B --> C[Task Decomposition]
-    C --> D[GitHub Sync]
-    D --> E[Parallel Execution]
-```
-
-### See It In Action (60 seconds)
+### Quick Install
 
 ```bash
-# Create a comprehensive PRD through guided brainstorming
-/pm:prd-new memory-system
+# Clone this enhanced fork
+git clone -b enhancements https://github.com/johnproblems/ccpm.git /tmp/ccpm-enhanced
 
-# Transform PRD into a technical epic with task breakdown
-/pm:prd-parse memory-system
+# Run installer
+bash /tmp/ccpm-enhanced/install.sh
 
-# Push to GitHub and start parallel execution
-/pm:epic-oneshot memory-system
-/pm:issue-start 1235
+# Verify installation
+/pm:help
 ```
 
-## What Makes This Different?
-
-| Traditional Development | Claude Code PM System |
-|------------------------|----------------------|
-| Context lost between sessions | **Persistent context** across all work |
-| Serial task execution | **Parallel agents** on independent tasks |
-| "Vibe coding" from memory | **Spec-driven** with full traceability |
-| Progress hidden in branches | **Transparent audit trail** in GitHub |
-| Manual task coordination | **Intelligent prioritization** with `/pm:next` |
-
-## Why GitHub Issues?
-
-Most Claude Code workflows operate in isolation – a single developer working with AI in their local environment. This creates a fundamental problem: **AI-assisted development becomes a silo**.
-
-By using GitHub Issues as our database, we unlock something powerful:
-
-### 🤝 **True Team Collaboration**
-- Multiple Claude instances can work on the same project simultaneously
-- Human developers see AI progress in real-time through issue comments
-- Team members can jump in anywhere – the context is always visible
-- Managers get transparency without interrupting flow
-
-### 🔄 **Seamless Human-AI Handoffs**
-- AI can start a task, human can finish it (or vice versa)
-- Progress updates are visible to everyone, not trapped in chat logs
-- Code reviews happen naturally through PR comments
-- No "what did the AI do?" meetings
-
-### 📈 **Scalable Beyond Solo Work**
-- Add team members without onboarding friction
-- Multiple AI agents working in parallel on different issues
-- Distributed teams stay synchronized automatically
-- Works with existing GitHub workflows and tools
-
-### 🎯 **Single Source of Truth**
-- No separate databases or project management tools
-- Issue state is the project state
-- Comments are the audit trail
-- Labels provide organization
-
-This isn't just a project management system – it's a **collaboration protocol** that lets humans and AI agents work together at scale, using infrastructure your team already trusts.
-
-## Core Principle: No Vibe Coding
-
-> **Every line of code must trace back to a specification.**
-
-We follow a strict 5-phase discipline:
-
-1. **🧠 Brainstorm** - Think deeper than comfortable
-2. **📝 Document** - Write specs that leave nothing to interpretation
-3. **📐 Plan** - Architect with explicit technical decisions
-4. **⚡ Execute** - Build exactly what was specified
-5. **📊 Track** - Maintain transparent progress at every step
-
-No shortcuts. No assumptions. No regrets.
-
-## System Architecture
-
-```
-.claude/
-├── CLAUDE.md          # Always-on instructions (copy content to your project's CLAUDE.md file)
-├── agents/            # Task-oriented agents (for context preservation)
-├── commands/          # Command definitions
-│   ├── context/       # Create, update, and prime context
-│   ├── pm/            # ← Project management commands (this system)
-│   └── testing/       # Prime and execute tests (edit this)
-├── context/           # Project-wide context files
-├── epics/             # ← PM's local workspace (place in .gitignore)
-│   └── [epic-name]/   # Epic and related tasks
-│       ├── epic.md    # Implementation plan
-│       ├── [#].md     # Individual task files
-│       └── updates/   # Work-in-progress updates
-├── prds/              # ← PM's PRD files
-├── rules/             # Place any rule files you'd like to reference here
-└── scripts/           # Place any script files you'd like to use here
-```
-
-## Workflow Phases
-
-### 1. Product Planning Phase
+### Manual Install
 
 ```bash
-/pm:prd-new feature-name
+# 1. Clone to temporary directory
+git clone -b enhancements https://github.com/johnproblems/ccpm.git /tmp/ccpm-enhanced
+
+# 2. Copy to your project's .claude directory
+cp -r /tmp/ccpm-enhanced/.claude/commands/pm /path/to/your/project/.claude/commands/
+cp -r /tmp/ccpm-enhanced/.claude/scripts/pm /path/to/your/project/.claude/scripts/
+cp -r /tmp/ccpm-enhanced/.claude/docs /path/to/your/project/.claude/
+
+# 3. Make scripts executable
+chmod +x /path/to/your/project/.claude/scripts/pm/*.sh
+
+# 4. (Optional) Install VSCode extension
+cd /tmp/ccpm-enhanced/vscode-extension
+npm install
+npm run compile
+code --install-extension ccpm-monitor-*.vsix
 ```
-Launches comprehensive brainstorming to create a Product Requirements Document capturing vision, user stories, success criteria, and constraints.
 
-**Output:** `.claude/prds/feature-name.md`
+## Quick Start
 
-### 2. Implementation Planning Phase
+### 1. Initialize CCPM in Your Project
 
 ```bash
-/pm:prd-parse feature-name
+/pm:init
 ```
-Transforms PRD into a technical implementation plan with architectural decisions, technical approach, and dependency mapping.
 
-**Output:** `.claude/epics/feature-name/epic.md`
-
-### 3. Task Decomposition Phase
+### 2. Create a PRD
 
 ```bash
-/pm:epic-decompose feature-name
+/pm:prd-new my-feature
+# Edit the PRD file that opens
 ```
-Breaks epic into concrete, actionable tasks with acceptance criteria, effort estimates, and parallelization flags.
 
-**Output:** `.claude/epics/feature-name/[task].md`
-
-### 4. GitHub Synchronization
+### 3. Parse PRD into Epic
 
 ```bash
-/pm:epic-sync feature-name
-# Or for confident workflows:
-/pm:epic-oneshot feature-name
+/pm:prd-parse my-feature
 ```
-Pushes epic and tasks to GitHub as issues with appropriate labels and relationships.
 
-### 5. Execution Phase
+### 4. Decompose Epic into Tasks
 
 ```bash
-/pm:issue-start 1234  # Launch specialized agent
-/pm:issue-sync 1234   # Push progress updates
-/pm:next             # Get next priority task
+/pm:epic-decompose my-feature
 ```
-Specialized agents implement tasks while maintaining progress updates and an audit trail.
 
-## Command Reference
-
-> [!TIP]
-> Type `/pm:help` for a concise command summary
-
-### Initial Setup
-- `/pm:init` - Install dependencies and configure GitHub
-
-### PRD Commands
-- `/pm:prd-new` - Launch brainstorming for new product requirement
-- `/pm:prd-parse` - Convert PRD to implementation epic
-- `/pm:prd-list` - List all PRDs
-- `/pm:prd-edit` - Edit existing PRD
-- `/pm:prd-status` - Show PRD implementation status
-
-### Epic Commands
-- `/pm:epic-decompose` - Break epic into task files
-- `/pm:epic-sync` - Push epic and tasks to GitHub
-- `/pm:epic-oneshot` - Decompose and sync in one command
-- `/pm:epic-list` - List all epics
-- `/pm:epic-show` - Display epic and its tasks
-- `/pm:epic-close` - Mark epic as complete
-- `/pm:epic-edit` - Edit epic details
-- `/pm:epic-refresh` - Update epic progress from tasks
-
-### Issue Commands
-- `/pm:issue-show` - Display issue and sub-issues
-- `/pm:issue-status` - Check issue status
-- `/pm:issue-start` - Begin work with specialized agent
-- `/pm:issue-sync` - Push updates to GitHub
-- `/pm:issue-close` - Mark issue as complete
-- `/pm:issue-reopen` - Reopen closed issue
-- `/pm:issue-edit` - Edit issue details
-
-### Workflow Commands
-- `/pm:next` - Show next priority issue with epic context
-- `/pm:status` - Overall project dashboard
-- `/pm:standup` - Daily standup report
-- `/pm:blocked` - Show blocked tasks
-- `/pm:in-progress` - List work in progress
-
-### Sync Commands
-- `/pm:sync` - Full bidirectional sync with GitHub
-- `/pm:import` - Import existing GitHub issues
-
-### Maintenance Commands
-- `/pm:validate` - Check system integrity
-- `/pm:clean` - Archive completed work
-- `/pm:search` - Search across all content
-
-## The Parallel Execution System
-
-### Issues Aren't Atomic
-
-Traditional thinking: One issue = One developer = One task
-
-**Reality: One issue = Multiple parallel work streams**
-
-A single "Implement user authentication" issue isn't one task. It's...
-
-- **Agent 1**: Database tables and migrations
-- **Agent 2**: Service layer and business logic
-- **Agent 3**: API endpoints and middleware
-- **Agent 4**: UI components and forms
-- **Agent 5**: Test suites and documentation
-
-All running **simultaneously** in the same worktree.
-
-### The Math of Velocity
-
-**Traditional Approach:**
-- Epic with 3 issues
-- Sequential execution
-
-**This System:**
-- Same epic with 3 issues
-- Each issue splits into ~4 parallel streams
-- **12 agents working simultaneously**
-
-We're not assigning agents to issues. We're **leveraging multiple agents** to ship faster.
-
-### Context Optimization
-
-**Traditional single-thread approach:**
-- Main conversation carries ALL the implementation details
-- Context window fills with database schemas, API code, UI components
-- Eventually hits context limits and loses coherence
-
-**Parallel agent approach:**
-- Main thread stays clean and strategic
-- Each agent handles its own context in isolation
-- Implementation details never pollute the main conversation
-- Main thread maintains oversight without drowning in code
-
-Your main conversation becomes the conductor, not the orchestra.
-
-### GitHub vs Local: Perfect Separation
-
-**What GitHub Sees:**
-- Clean, simple issues
-- Progress updates
-- Completion status
-
-**What Actually Happens Locally:**
-- Issue #1234 explodes into 5 parallel agents
-- Agents coordinate through Git commits
-- Complex orchestration hidden from view
-
-GitHub doesn't need to know HOW the work got done – just that it IS done.
-
-### The Command Flow
+### 5. Sync to GitHub
 
 ```bash
-# Analyze what can be parallelized
-/pm:issue-analyze 1234
-
-# Launch the swarm
-/pm:epic-start memory-system
-
-# Watch the magic
-# 12 agents working across 3 issues
-# All in: ../epic-memory-system/
-
-# One clean merge when done
-/pm:epic-merge memory-system
+/pm:epic-sync my-feature
 ```
 
-## Key Features & Benefits
-
-### 🧠 **Context Preservation**
-Never lose project state again. Each epic maintains its own context, agents read from `.claude/context/`, and updates locally before syncing.
-
-### ⚡ **Parallel Execution**
-Ship faster with multiple agents working simultaneously. Tasks marked `parallel: true` enable conflict-free concurrent development.
-
-### 🔗 **GitHub Native**
-Works with tools your team already uses. Issues are the source of truth, comments provide history, and there is no dependency on the Projects API.
-
-### 🤖 **Agent Specialization**
-Right tool for every job. Different agents for UI, API, and database work. Each reads requirements and posts updates automatically.
-
-### 📊 **Full Traceability**
-Every decision is documented. PRD → Epic → Task → Issue → Code → Commit. Complete audit trail from idea to production.
-
-### 🚀 **Developer Productivity**
-Focus on building, not managing. Intelligent prioritization, automatic context loading, and incremental sync when ready.
-
-## Proven Results
-
-Teams using this system report:
-- **89% less time** lost to context switching – you'll use `/compact` and `/clear` a LOT less
-- **5-8 parallel tasks** vs 1 previously – editing/testing multiple files at the same time
-- **75% reduction** in bug rates – due to the breaking down features into detailed tasks
-- **Up to 3x faster** feature delivery – based on feature size and complexity
-
-## Example Flow
+### 6. Start Working
 
 ```bash
-# Start a new feature
-/pm:prd-new memory-system
+# View status
+/pm:epic-status my-feature
 
-# Review and refine the PRD...
+# Start next task
+/pm:issue-start 42
 
-# Create implementation plan
-/pm:prd-parse memory-system
+# ... do work ...
 
-# Review the epic...
+# Sync progress
+/pm:issue-sync 42
 
-# Break into tasks and push to GitHub
-/pm:epic-oneshot memory-system
-# Creates issues: #1234 (epic), #1235, #1236 (tasks)
-
-# Start development on a task
-/pm:issue-start 1235
-# Agent begins work, maintains local progress
-
-# Sync progress to GitHub
-/pm:issue-sync 1235
-# Updates posted as issue comments
-
-# Check overall status
-/pm:epic-show memory-system
+# When done (or auto-completes at 100%)
+/pm:issue-complete 42
 ```
 
-## Get Started Now
+## Enhanced Commands
 
-### Quick Setup (2 minutes)
+### ✅ Production-Ready Commands
 
-1. **Install this repository into your project**:
+#### Add Task to Existing Epic
+```bash
+/pm:task-add <epic-name>
+```
+**Status**: ✅ Tested and production-ready
 
-   #### Unix/Linux/macOS
+Interactive prompts for:
+- Task title and description
+- Estimated effort (hours)
+- Priority (high/medium/low)
+- Dependencies (issue numbers)
+- Blockers (what this blocks)
 
-   ```bash
-   cd path/to/your/project/
-   curl -sSL https://automaze.io/ccpm/install | bash
-   # or: wget -qO- https://automaze.io/ccpm/install | bash
-   ```
+**Automatically**:
+- Gets next GitHub issue number
+- Creates task file with correct numbering
+- Creates GitHub issue with labels
+- Adds `blocked` label if dependencies not met
+- Updates epic metadata
+- Updates pending label
 
-   #### Windows (PowerShell)
-   ```bash
-   cd path/to/your/project/
-   iwr -useb https://automaze.io/ccpm/install | iex
-   ```
-   > ⚠️ **IMPORTANT**: If you already have a `.claude` directory, clone this repository to a different directory and copy the contents of the cloned `.claude` directory to your project's `.claude` directory.
+#### Complete Task
+```bash
+/pm:issue-complete <issue_number>
+```
+**Status**: ✅ Tested and production-ready
 
-   See full/other installation options in the [installation guide ›](https://github.com/automazeio/ccpm/tree/main/install)
+**Automatically**:
+- Removes `in-progress` and `blocked` labels
+- Adds `completed` label (green)
+- Closes GitHub issue
+- Updates task and epic frontmatter
+- Unblocks dependent tasks
+- Moves pending label to next task
+- Posts completion comment
 
+#### Sync Progress (Enhanced)
+```bash
+/pm:issue-sync <issue_number>
+```
+**Status**: ✅ Tested and production-ready
 
-2. **Initialize the PM system**:
-   ```bash
-   /pm:init
-   ```
-   This command will:
-   - Install GitHub CLI (if needed)
-   - Authenticate with GitHub
-   - Install [gh-sub-issue extension](https://github.com/yahsan2/gh-sub-issue) for proper parent-child relationships
-   - Create required directories
-   - Update .gitignore
+**New**: Auto-detects 100% completion and calls `/pm:issue-complete` automatically!
 
-3. **Create `CLAUDE.md`** with your repository information
-   ```bash
-   /init include rules from .claude/CLAUDE.md
-   ```
-   > If you already have a `CLAUDE.md` file, run: `/re-init` to update it with important rules from `.claude/CLAUDE.md`.
+#### Epic Status (Enhanced)
+```bash
+/pm:epic-status <epic-name>
+```
+**Status**: ✅ Tested and production-ready
 
-4. **Prime the system**:
-   ```bash
-   /context:create
-   ```
+Shows beautiful terminal UI with:
+- Progress bar
+- All tasks with color-coded status
+- Progress % and last sync time for in-progress tasks
+- Summary statistics
+- Quick action suggestions
 
+**Tip**: Use with `watch` for auto-refresh:
+```bash
+watch -n 30 /pm:epic-status my-feature
+```
 
+### 🧪 Experimental Commands
 
-### Start Your First Feature
+#### Interactive Issue Start
+```bash
+/pm:issue-start-interactive <issue_number>
+```
+**Status**: ⚠️ Experimental - Not fully tested
+
+Launches interactive Claude Code instances in separate terminals for parallel work streams instead of background agents.
+
+**Difference from `/pm:issue-start`**:
+- ✅ Full user interaction (approve, guide, correct)
+- ✅ Real-time monitoring in terminals
+- ✅ Better for complex/uncertain tasks
+- ⚠️ Slower (human in loop)
+- ⚠️ Not fully tested yet
+
+**Use at your own risk** - may have bugs or unexpected behavior.
+
+## Label System
+
+| Label | Color | Auto-Applied | Meaning |
+|-------|-------|--------------|---------|
+| `epic` | Blue | Epic sync | Epic issue |
+| `enhancement` | Light Blue | Epic sync | New feature |
+| `task` | Purple | Task sync | Individual task |
+| `epic:<name>` | Varies | Task sync | Epic-specific (for filtering) |
+| `in-progress` | Orange | Task start | Being worked on |
+| `completed` | Green | Task complete/100% | Finished |
+| `blocked` | Red | Dependencies check | Blocked by other tasks |
+| `pending` | Yellow | Auto-managed | Next task to work on |
+
+### Pending Label Behavior
+
+Only **one** task has the `pending` label at a time. It marks the next task to work on.
+
+**Example**:
+```
+#18: completed
+#19: completed
+#20: in-progress
+#21: pending     ← Label is here (next after in-progress)
+#22: (no label)
+```
+
+When #20 completes → label moves to #21
+When #21 starts → label moves to #22
+
+## Example Workflow
+
+### Scenario: Bug Found During Development
 
 ```bash
-/pm:prd-new your-feature-name
+# 1. Currently working on task #20
+/pm:issue-start 20
+
+# 2. Discover theme parser bug while working
+#    Need to add new task
+
+/pm:task-add phase-a3-preferences
+
+# Interactive prompts:
+Task title: Fix theme parser validation bug
+Description: Parser fails on hex codes with alpha channel
+Effort: 4
+Priority: high
+Depends on: 20
+Blocks: none
+
+# Output:
+✅ Task #42 created
+✅ Labels: task, epic:phase-a3, blocked
+⚠️  Blocked by: #20 (in progress)
+
+# 3. Finish current task
+/pm:issue-sync 20
+# → Auto-completes at 100%
+# → Unblocks task #42
+# → Moves pending label
+
+# 4. Check status
+/pm:epic-status phase-a3
+# Shows #42 is now unblocked and pending
+
+# 5. Start new task
+/pm:issue-start 42
 ```
 
-Watch as structured planning transforms into shipped code.
+## VSCode Extension
 
-## Local vs Remote
+**Status**: 📐 Designed, ready for implementation
 
-| Operation | Local | GitHub |
-|-----------|-------|--------|
-| PRD Creation | ✅ | — |
-| Implementation Planning | ✅ | — |
-| Task Breakdown | ✅ | ✅ (sync) |
-| Execution | ✅ | — |
-| Status Updates | ✅ | ✅ (sync) |
-| Final Deliverables | — | ✅ |
+### Planned Features
 
-## Technical Notes
+- **Epic/Task Tree View**: Sidebar showing all epics and tasks with status icons
+- **Progress Panel**: View progress notes with AI summarization
+- **Status Bar**: Shows current task and progress
+- **Quick Actions**: Right-click menu for start/complete/sync
+- **Notifications**: Desktop alerts when tasks complete
+- **Auto-refresh**: Updates from GitHub every 30 seconds
 
-### GitHub Integration
-- Uses **gh-sub-issue extension** for proper parent-child relationships
-- Falls back to task lists if extension not installed
-- Epic issues track sub-task completion automatically
-- Labels provide additional organization (`epic:feature`, `task:feature`)
+### Implementation
 
-### File Naming Convention
-- Tasks start as `001.md`, `002.md` during decomposition
-- After GitHub sync, renamed to `{issue-id}.md` (e.g., `1234.md`)
-- Makes it easy to navigate: issue #1234 = file `1234.md`
+The extension is **designed and architected** (see [docs/VSCODE_EXTENSION_DESIGN.md](docs/VSCODE_EXTENSION_DESIGN.md)) but not yet implemented.
 
-### Design Decisions
-- Intentionally avoids GitHub Projects API complexity
-- All commands operate on local files first for speed
-- Synchronization with GitHub is explicit and controlled
-- Worktrees provide clean git isolation for parallel work
-- GitHub Projects can be added separately for visualization
+To implement:
+```bash
+cd vscode-extension
+npm install
+npm run compile
+# Implement features based on design doc
+```
+
+## Documentation
+
+- [Workflow Improvements](docs/PM_WORKFLOW_IMPROVEMENTS.md) - Epic sync and decompose enhancements
+- [Task Addition Design](docs/PM_ADD_TASK_DESIGN.md) - Design document for new features
+- [Workflow Summary](docs/PM_WORKFLOW_SUMMARY.md) - Complete implementation guide
+- [VSCode Extension Design](docs/VSCODE_EXTENSION_DESIGN.md) - Extension architecture
+- [Fork File List](docs/CCPM_FORK_FILES.md) - What files are in this fork
+
+## What's Different from Original CCPM?
+
+### Original CCPM
+- Epic → Tasks workflow
+- Basic GitHub sync
+- Manual task completion
+- Simple status display
+- No VSCode integration
+
+### This Fork Adds
+- ✅ Dynamic task addition mid-epic
+- ✅ 8 automated GitHub labels
+- ✅ Auto-completion at 100%
+- ✅ Pending label system
+- ✅ Beautiful terminal UI
+- ✅ Automatic dependency management
+- ✅ Enhanced epic sync (bash script)
+- ✅ GitHub issue numbering in files
+- ✅ Comprehensive documentation
+- 🧪 Experimental: Interactive issue start
+- 📐 Planned: VSCode extension
+
+## Changelog
+
+### v1.0.0-enhanced (2025-10-04)
+
+**New Commands** (Production-Ready):
+- `/pm:task-add` - Add tasks to existing epics
+- `/pm:issue-complete` - Complete task with full automation
+
+**Experimental Commands**:
+- `/pm:issue-start-interactive` - Interactive work streams (untested)
+
+**Enhanced Commands**:
+- `/pm:issue-sync` - Auto-completion at 100%
+- `/pm:epic-sync` - Reliable bash script implementation
+- `/pm:epic-decompose` - GitHub numbering, no consolidation
+- `/pm:epic-status` - Beautiful UI with GitHub integration
+
+**New Scripts**:
+- `update-pending-label.sh` - Pending label management
+
+**Enhanced Scripts**:
+- `sync-epic.sh` - Complete rewrite for reliability
+- `epic-status.sh` - Beautiful box-drawing UI
+
+**New Features**:
+- Automated GitHub label system (8 labels)
+- Pending label auto-management
+- Dependency blocking/unblocking
+- Epic progress tracking
+
+**Documentation**:
+- Complete workflow guides
+- Design documents
+- Implementation examples
+- VSCode extension architecture
+
+**Planned**:
+- VSCode extension (designed, not yet implemented)
+
+## Upstream
+
+This fork is based on [automazeio/ccpm](https://github.com/automazeio/ccpm).
+
+To sync with upstream:
+```bash
+git remote add upstream https://github.com/automazeio/ccpm.git
+git fetch upstream
+git merge upstream/main
+```
+
+## Contributing
+
+Pull requests welcome! Please:
+
+1. Fork this repo
+2. Create feature branch
+3. Make changes
+4. Test on fresh project
+5. Submit PR
+
+## License
+
+Same as original CCPM - see LICENSE file
+
+## Support
+
+- **Issues**: https://github.com/johnproblems/ccpm/issues
+- **Discussions**: Use GitHub Discussions
+- **Original CCPM**: https://github.com/automazeio/ccpm
+
+## Credits
+
+- **Original CCPM**: [automazeio](https://github.com/automazeio)
+- **Enhancements**: [johnproblems](https://github.com/johnproblems)
+- **Powered by**: [Claude Code](https://claude.com/code)
 
 ---
 
-## Support This Project
-
-Claude Code PM was developed at [Automaze](https://automaze.io) **for developers who ship, by developers who ship**.
-
-If Claude Code PM helps your team ship better software:
-
-- ⭐ **[Star this repository](https://github.com/automazeio/ccpm)** to show your support
-- 🐦 **[Follow @aroussi on X](https://x.com/aroussi)** for updates and tips
-
-
----
-
-> [!TIP]
-> **Ship faster with Automaze.** We partner with founders to bring their vision to life, scale their business, and optimize for success.
-> **[Visit Automaze to book a call with me ›](https://automaze.io)**
-
----
-
-## Star History
-
-![Star History Chart](https://api.star-history.com/svg?repos=automazeio/ccpm)
+**Made with ❤️ and Claude Code**
