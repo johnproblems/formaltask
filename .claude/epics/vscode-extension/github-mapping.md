@@ -1,71 +1,71 @@
 # GitHub Issue Mapping
 
-Epic: #1 - https://github.com/johnproblems/ccpm/issues/1
+Epic: #1 - https://github.com/johnproblems/formaltask/issues/1
 
 Tasks:
-- #2: Initialize extension project with TypeScript + webpack config - https://github.com/johnproblems/ccpm/issues/2
-- #3: Configure testing infrastructure (Mocha, Sinon, nyc) - https://github.com/johnproblems/ccpm/issues/3
-- #4: Setup CI/CD pipeline with coverage gates (90%+ enforcement) - https://github.com/johnproblems/ccpm/issues/4
-- #5: Create package.json with all dependencies and scripts - https://github.com/johnproblems/ccpm/issues/5
-- #6: Configure VSCode extension manifest (package.json extension fields) - https://github.com/johnproblems/ccpm/issues/6
-- #7: Create TypeScript interfaces for Epic/Task frontmatter - https://github.com/johnproblems/ccpm/issues/7
-- #8: Implement frontmatter parser (YAML parsing with validation) - https://github.com/johnproblems/ccpm/issues/8
-- #9: Implement file system watcher for `.claude/epics/` directory - https://github.com/johnproblems/ccpm/issues/9
-- #10: Create Epic data provider service (read epic.md files) - https://github.com/johnproblems/ccpm/issues/10
-- #11: Create Task data provider service (read task .md files) - https://github.com/johnproblems/ccpm/issues/11
-- #12: Add caching layer for file reads (5 min TTL, performance optimization) - https://github.com/johnproblems/ccpm/issues/12
-- #13: Implement TreeDataProvider for Epic/Task hierarchy - https://github.com/johnproblems/ccpm/issues/13
-- #14: Create TreeItem classes for Epic and Task nodes - https://github.com/johnproblems/ccpm/issues/14
-- #15: Add status icons (🟢🟡🔴⏭️⚪) based on task status - https://github.com/johnproblems/ccpm/issues/15
-- #16: Implement progress percentage display for epics - https://github.com/johnproblems/ccpm/issues/16
-- #17: Add click handler to open task files in editor - https://github.com/johnproblems/ccpm/issues/17
-- #18: Implement tree refresh on file system changes (debounced 500ms) - https://github.com/johnproblems/ccpm/issues/18
-- #19: Add GitHub label integration (gh api calls + caching) - https://github.com/johnproblems/ccpm/issues/19
-- #20: Create webview panel provider for progress notes - https://github.com/johnproblems/ccpm/issues/20
-- #21: Implement markdown rendering with marked.js (with XSS sanitization) - https://github.com/johnproblems/ccpm/issues/21
-- #22: Add CSS styling for progress panel - https://github.com/johnproblems/ccpm/issues/22
-- #23: Implement task selection handler (tree → panel sync) - https://github.com/johnproblems/ccpm/issues/23
-- #24: Create "Sync to GitHub" button with terminal integration - https://github.com/johnproblems/ccpm/issues/24
-- #25: Implement auto-refresh on progress.md file changes (debounced 500ms) - https://github.com/johnproblems/ccpm/issues/25
-- #26: Implement "CCPM: Show Epic Status" command - https://github.com/johnproblems/ccpm/issues/26
-- #27: Implement "CCPM: Add Task" command - https://github.com/johnproblems/ccpm/issues/27
-- #28: Implement "CCPM: Start Next Task" command - https://github.com/johnproblems/ccpm/issues/28
-- #29: Implement "CCPM: Complete Current Task" command - https://github.com/johnproblems/ccpm/issues/29
-- #30: Implement "CCPM: Sync Progress" command - https://github.com/johnproblems/ccpm/issues/30
-- #31: Implement "CCPM: Refresh All" command - https://github.com/johnproblems/ccpm/issues/31
-- #32: Implement "CCPM: View on GitHub" command - https://github.com/johnproblems/ccpm/issues/32
-- #33: Implement "CCPM: Copy Issue Number" command - https://github.com/johnproblems/ccpm/issues/33
-- #34: Create status bar item with current task info - https://github.com/johnproblems/ccpm/issues/34
-- #35: Implement status text formatting logic - https://github.com/johnproblems/ccpm/issues/35
-- #36: Create Quick Pick menu with actions - https://github.com/johnproblems/ccpm/issues/36
-- #37: Add status bar update on task selection changes - https://github.com/johnproblems/ccpm/issues/37
-- #38: Register context menu contributions in package.json - https://github.com/johnproblems/ccpm/issues/38
-- #39: Implement context menu command handlers (7 actions) - https://github.com/johnproblems/ccpm/issues/39
-- #40: Add menu visibility logic (epic vs task items) - https://github.com/johnproblems/ccpm/issues/40
-- #41: Implement action enablement based on item state - https://github.com/johnproblems/ccpm/issues/41
-- #42: Create HoverProvider for tree items - https://github.com/johnproblems/ccpm/issues/42
-- #43: Implement tooltip markdown generation (7 required fields) - https://github.com/johnproblems/ccpm/issues/43
-- #44: Register hover provider with VSCode - https://github.com/johnproblems/ccpm/issues/44
-- #45: Implement notification manager service - https://github.com/johnproblems/ccpm/issues/45
-- #46: Add event listeners for notification triggers (4 event types) - https://github.com/johnproblems/ccpm/issues/46
-- #47: Implement notification debouncing logic (5 min per task) - https://github.com/johnproblems/ccpm/issues/47
-- #48: Define configuration schema in package.json (7 settings) - https://github.com/johnproblems/ccpm/issues/48
-- #49: Implement settings manager service with validation - https://github.com/johnproblems/ccpm/issues/49
-- #50: Add GitHub token SecretStorage integration (encrypted) - https://github.com/johnproblems/ccpm/issues/50
-- #51: Implement settings change listeners (hot reload) - https://github.com/johnproblems/ccpm/issues/51
-- #52: Unit tests - Frontmatter parser (90% coverage target) - https://github.com/johnproblems/ccpm/issues/52
-- #53: Unit tests - Data providers (Epic/Task services, 90% coverage) - https://github.com/johnproblems/ccpm/issues/53
-- #54: Unit tests - Status bar formatter and logic (90% coverage) - https://github.com/johnproblems/ccpm/issues/54
-- #55: Unit tests - Command validation and error handling (90% coverage) - https://github.com/johnproblems/ccpm/issues/55
-- #56: Integration tests - TreeDataProvider + VSCode API (90% coverage) - https://github.com/johnproblems/ccpm/issues/56
-- #57: Integration tests - Progress panel + webview (90% coverage) - https://github.com/johnproblems/ccpm/issues/57
-- #58: Integration tests - File watcher integration (90% coverage) - https://github.com/johnproblems/ccpm/issues/58
-- #59: Integration tests - GitHub API mocking and caching - https://github.com/johnproblems/ccpm/issues/59
-- #60: E2E test - Full workflow (open epic → expand → click task → view/sync progress) - https://github.com/johnproblems/ccpm/issues/60
-- #61: Setup coverage reporting and CI gates (enforce 90-92% line coverage) - https://github.com/johnproblems/ccpm/issues/61
-- #62: Create README with installation, usage, and screenshots - https://github.com/johnproblems/ccpm/issues/62
-- #63: Add demo GIFs for key features (tree view, progress panel, commands) - https://github.com/johnproblems/ccpm/issues/63
-- #64: Create VSCode marketplace listing (description, icon, banner, categories) - https://github.com/johnproblems/ccpm/issues/64
-- #65: Configure VSCE packaging and publishing workflow - https://github.com/johnproblems/ccpm/issues/65
+- #2: Initialize extension project with TypeScript + webpack config - https://github.com/johnproblems/formaltask/issues/2
+- #3: Configure testing infrastructure (Mocha, Sinon, nyc) - https://github.com/johnproblems/formaltask/issues/3
+- #4: Setup CI/CD pipeline with coverage gates (90%+ enforcement) - https://github.com/johnproblems/formaltask/issues/4
+- #5: Create package.json with all dependencies and scripts - https://github.com/johnproblems/formaltask/issues/5
+- #6: Configure VSCode extension manifest (package.json extension fields) - https://github.com/johnproblems/formaltask/issues/6
+- #7: Create TypeScript interfaces for Epic/Task frontmatter - https://github.com/johnproblems/formaltask/issues/7
+- #8: Implement frontmatter parser (YAML parsing with validation) - https://github.com/johnproblems/formaltask/issues/8
+- #9: Implement file system watcher for `.claude/epics/` directory - https://github.com/johnproblems/formaltask/issues/9
+- #10: Create Epic data provider service (read epic.md files) - https://github.com/johnproblems/formaltask/issues/10
+- #11: Create Task data provider service (read task .md files) - https://github.com/johnproblems/formaltask/issues/11
+- #12: Add caching layer for file reads (5 min TTL, performance optimization) - https://github.com/johnproblems/formaltask/issues/12
+- #13: Implement TreeDataProvider for Epic/Task hierarchy - https://github.com/johnproblems/formaltask/issues/13
+- #14: Create TreeItem classes for Epic and Task nodes - https://github.com/johnproblems/formaltask/issues/14
+- #15: Add status icons (🟢🟡🔴⏭️⚪) based on task status - https://github.com/johnproblems/formaltask/issues/15
+- #16: Implement progress percentage display for epics - https://github.com/johnproblems/formaltask/issues/16
+- #17: Add click handler to open task files in editor - https://github.com/johnproblems/formaltask/issues/17
+- #18: Implement tree refresh on file system changes (debounced 500ms) - https://github.com/johnproblems/formaltask/issues/18
+- #19: Add GitHub label integration (gh api calls + caching) - https://github.com/johnproblems/formaltask/issues/19
+- #20: Create webview panel provider for progress notes - https://github.com/johnproblems/formaltask/issues/20
+- #21: Implement markdown rendering with marked.js (with XSS sanitization) - https://github.com/johnproblems/formaltask/issues/21
+- #22: Add CSS styling for progress panel - https://github.com/johnproblems/formaltask/issues/22
+- #23: Implement task selection handler (tree → panel sync) - https://github.com/johnproblems/formaltask/issues/23
+- #24: Create "Sync to GitHub" button with terminal integration - https://github.com/johnproblems/formaltask/issues/24
+- #25: Implement auto-refresh on progress.md file changes (debounced 500ms) - https://github.com/johnproblems/formaltask/issues/25
+- #26: Implement "CCPM: Show Epic Status" command - https://github.com/johnproblems/formaltask/issues/26
+- #27: Implement "CCPM: Add Task" command - https://github.com/johnproblems/formaltask/issues/27
+- #28: Implement "CCPM: Start Next Task" command - https://github.com/johnproblems/formaltask/issues/28
+- #29: Implement "CCPM: Complete Current Task" command - https://github.com/johnproblems/formaltask/issues/29
+- #30: Implement "CCPM: Sync Progress" command - https://github.com/johnproblems/formaltask/issues/30
+- #31: Implement "CCPM: Refresh All" command - https://github.com/johnproblems/formaltask/issues/31
+- #32: Implement "CCPM: View on GitHub" command - https://github.com/johnproblems/formaltask/issues/32
+- #33: Implement "CCPM: Copy Issue Number" command - https://github.com/johnproblems/formaltask/issues/33
+- #34: Create status bar item with current task info - https://github.com/johnproblems/formaltask/issues/34
+- #35: Implement status text formatting logic - https://github.com/johnproblems/formaltask/issues/35
+- #36: Create Quick Pick menu with actions - https://github.com/johnproblems/formaltask/issues/36
+- #37: Add status bar update on task selection changes - https://github.com/johnproblems/formaltask/issues/37
+- #38: Register context menu contributions in package.json - https://github.com/johnproblems/formaltask/issues/38
+- #39: Implement context menu command handlers (7 actions) - https://github.com/johnproblems/formaltask/issues/39
+- #40: Add menu visibility logic (epic vs task items) - https://github.com/johnproblems/formaltask/issues/40
+- #41: Implement action enablement based on item state - https://github.com/johnproblems/formaltask/issues/41
+- #42: Create HoverProvider for tree items - https://github.com/johnproblems/formaltask/issues/42
+- #43: Implement tooltip markdown generation (7 required fields) - https://github.com/johnproblems/formaltask/issues/43
+- #44: Register hover provider with VSCode - https://github.com/johnproblems/formaltask/issues/44
+- #45: Implement notification manager service - https://github.com/johnproblems/formaltask/issues/45
+- #46: Add event listeners for notification triggers (4 event types) - https://github.com/johnproblems/formaltask/issues/46
+- #47: Implement notification debouncing logic (5 min per task) - https://github.com/johnproblems/formaltask/issues/47
+- #48: Define configuration schema in package.json (7 settings) - https://github.com/johnproblems/formaltask/issues/48
+- #49: Implement settings manager service with validation - https://github.com/johnproblems/formaltask/issues/49
+- #50: Add GitHub token SecretStorage integration (encrypted) - https://github.com/johnproblems/formaltask/issues/50
+- #51: Implement settings change listeners (hot reload) - https://github.com/johnproblems/formaltask/issues/51
+- #52: Unit tests - Frontmatter parser (90% coverage target) - https://github.com/johnproblems/formaltask/issues/52
+- #53: Unit tests - Data providers (Epic/Task services, 90% coverage) - https://github.com/johnproblems/formaltask/issues/53
+- #54: Unit tests - Status bar formatter and logic (90% coverage) - https://github.com/johnproblems/formaltask/issues/54
+- #55: Unit tests - Command validation and error handling (90% coverage) - https://github.com/johnproblems/formaltask/issues/55
+- #56: Integration tests - TreeDataProvider + VSCode API (90% coverage) - https://github.com/johnproblems/formaltask/issues/56
+- #57: Integration tests - Progress panel + webview (90% coverage) - https://github.com/johnproblems/formaltask/issues/57
+- #58: Integration tests - File watcher integration (90% coverage) - https://github.com/johnproblems/formaltask/issues/58
+- #59: Integration tests - GitHub API mocking and caching - https://github.com/johnproblems/formaltask/issues/59
+- #60: E2E test - Full workflow (open epic → expand → click task → view/sync progress) - https://github.com/johnproblems/formaltask/issues/60
+- #61: Setup coverage reporting and CI gates (enforce 90-92% line coverage) - https://github.com/johnproblems/formaltask/issues/61
+- #62: Create README with installation, usage, and screenshots - https://github.com/johnproblems/formaltask/issues/62
+- #63: Add demo GIFs for key features (tree view, progress panel, commands) - https://github.com/johnproblems/formaltask/issues/63
+- #64: Create VSCode marketplace listing (description, icon, banner, categories) - https://github.com/johnproblems/formaltask/issues/64
+- #65: Configure VSCE packaging and publishing workflow - https://github.com/johnproblems/formaltask/issues/65
 
 Synced: 2025-10-04T12:39:29Z

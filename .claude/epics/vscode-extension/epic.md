@@ -4,7 +4,7 @@ status: backlog
 created: 2025-10-04T12:11:36Z
 progress: 0%
 prd: .claude/prds/vscode-extension.md
-github: https://github.com/johnproblems/ccpm/issues/1
+github: https://github.com/johnproblems/formaltask/issues/1
 ---
 
 # Epic: CCPM Monitor - VSCode Extension
