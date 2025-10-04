@@ -1,8 +1,9 @@
-# Project-specific directories (should never be committed)
-.claude/epics/*
-.claude/prds/*
-!.claude/epics/.gitkeep
-!.claude/prds/.gitkeep
+# Project-specific directories
+# Commented out to allow migration to different workspaces
+# .claude/epics/*
+# .claude/prds/*
+# !.claude/epics/.gitkeep
+# !.claude/prds/.gitkeep
 
 # VSCode extension build artifacts
 vscode-extension/node_modules/
