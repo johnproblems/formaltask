@@ -5,7 +5,7 @@
 set -e
 
 CCPM_VERSION="1.0.0-enhanced"
-CCPM_REPO="https://github.com/johnproblems/ccpm.git"
+CCPM_REPO="https://github.com/johnproblems/formaltask.git"
 CCPM_BRANCH="enhancements"
 
 echo ""
