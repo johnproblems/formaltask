@@ -34,14 +34,20 @@ if [ ! -d ".git" ]; then
   fi
 fi
 
-# Check for .claude directory
+# Check for .claude directory and ensure all subdirectories exist
 if [ ! -d ".claude" ]; then
   echo "📁 Creating .claude directory structure..."
-  mkdir -p .claude/{commands/pm,scripts/pm,docs,epics,prds}
-  echo "✓ Created .claude directory"
 else
   echo "✓ .claude directory exists"
 fi
+
+# Always ensure subdirectories exist (in case .claude was manually created without full structure)
+mkdir -p .claude/commands/pm
+mkdir -p .claude/scripts/pm
+mkdir -p .claude/docs
+mkdir -p .claude/epics
+mkdir -p .claude/prds
+echo "✓ Directory structure ready"
 
 # Check for existing CCPM installation
 if [ -f ".claude/commands/pm/help.md" ]; then
