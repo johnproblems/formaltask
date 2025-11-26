@@ -84,6 +84,40 @@ if ! test -f .claude/epics/$ARGUMENTS/{issue}-analysis.md; then
 fi
 ```
 
+### 3.5. Commit Analysis Files (CRITICAL STEP)
+
+**IMPORTANT:** Analysis files MUST be committed BEFORE launching agents.
+
+```bash
+# Check for new analysis files
+if [ -n "$(git status --porcelain | grep '?? .*-analysis\.md')" ]; then
+  echo "Committing analysis files..."
+
+  for issue in $(git status --porcelain | grep '?? .*-analysis\.md' | awk '{print $2}' | grep -oE '[0-9]+-analysis'); do
+    issue_num=$(echo "$issue" | grep -oE '^[0-9]+')
+
+    git add ".claude/epics/$ARGUMENTS/$issue.md"
+    git commit -m "Issue #$issue_num: Add analysis and execution tracking files
+
+- Add work stream analysis for Issue #$issue_num
+- Lists all parallel streams and their scope
+- Provides implementation strategy and coordination points
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+    echo "✅ Committed: Issue #$issue_num analysis"
+  done
+fi
+```
+
+**Why this matters:**
+- Creates clear audit trail of planning BEFORE implementation
+- Prevents analysis files from being left untracked
+- Ensures git history shows analysis → implementation → execution
+- Matches the pattern established in Issue #3
+
 ### 4. Launch Parallel Agents
 
 For each ready issue with analysis:
@@ -124,6 +158,19 @@ Task:
 
     Update progress in:
     .claude/epics/$ARGUMENTS/updates/{issue}/stream-{X}.md
+
+    **IMPORTANT - GitHub Progress Comments:**
+    When this stream is complete, add a GitHub issue comment with:
+    - Stream number and description
+    - Summary of work accomplished
+    - Files created/modified
+    - Testing status
+    - Acceptance criteria met
+
+    Command:
+    gh issue comment {issue_number} -b "..."
+
+    See section 7 of /pm:epic-start for the exact format.
 ```
 
 ### 5. Track Active Agents
@@ -151,6 +198,23 @@ branch: epic/$ARGUMENTS
 - {None yet}
 ```
 
+### 5.5. Commit Execution Status File
+
+After creating/updating execution-status.md, commit it:
+
+```bash
+git add .claude/epics/$ARGUMENTS/execution-status.md
+git commit -m "Track: Start execution for $ARGUMENTS epic
+
+- Launching agents for ready issues
+- Tracking all active streams
+- Monitoring dependencies and blockers
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
 ### 6. Monitor and Coordinate
 
 Set up monitoring:
@@ -172,12 +236,59 @@ Merge when complete:
 "
 ```
 
-### 7. Handle Dependencies
+### 7. GitHub Issue Progress Comments
+
+As agents complete each stream, they must add progress update comments to the GitHub issue:
+
+**Comment Format (Post on each GitHub issue for each stream):**
+```markdown
+### Progress Update {N}: Stream {X} - {Description}
+
+**Time:** {timestamp}
+**Status:** ✅ Completed
+
+**Summary:** {Brief description of what was accomplished}
+
+**Files Created:**
+- `path/to/file1.ts` - Description
+- `path/to/file2.ts` - Description
+
+**Key Features:**
+- Feature A implemented
+- Feature B implemented
+
+**Testing Status:**
+✅ All tests passing
+
+**Acceptance Criteria Met:**
+- [x] Criterion 1
+- [x] Criterion 2
+```
+
+**Why this matters:**
+- Provides real-time project visibility on GitHub
+- Reviewers can track progress without checking git
+- Clear documentation of what each stream accomplished
+- Integration point with Issue tracking workflow
+- Each stream gets its own comment (not merged into one)
+
+**Implementation in agents:**
+```bash
+# After completing a stream, agents should:
+gh issue comment {issue_number} -b "$(cat <<'EOF'
+### Progress Update {N}: Stream {X} - {Description}
+...details...
+EOF
+)"
+```
+
+### 8. Handle Dependencies
 
 As agents complete streams:
 - Check if any blocked issues are now ready
 - Launch new agents for newly-ready work
 - Update execution-status.md
+- Ensure GitHub issue comments are added for each stream
 
 ## Output Format
 
