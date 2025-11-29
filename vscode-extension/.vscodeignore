@@ -12,3 +12,7 @@ node_modules
 .editorconfig
 .prettierrc
 *.vsix
+coverage/**
+.nyc_output/**
+.nycrc.json
+.mocharc.json

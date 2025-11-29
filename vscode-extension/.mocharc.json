@@ -1,0 +1,14 @@
+{
+  "require": [
+    "source-map-support/register"
+  ],
+  "extensions": [
+    "ts"
+  ],
+  "spec": [
+    "out/test/suite/**/*.test.js"
+  ],
+  "ui": "bdd",
+  "color": true,
+  "timeout": 20000
+}

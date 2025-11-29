@@ -4,3 +4,5 @@ dist
 *.vsix
 .vscode-test
 .vscode-test/**
+coverage
+.nyc_output
