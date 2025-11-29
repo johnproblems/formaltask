@@ -26,13 +26,12 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "test:unit": "npm run compile-tests && mocha",
-    "test:coverage": "npm run compile-tests && nyc mocha",
-    "test:watch": "npm run compile-tests && mocha --watch",
+    "test:coverage": "nyc node ./out/test/runTest.js",
+    "test:watch": "npm run compile-tests -- -w",
     "coverage": "npm run test:coverage",
     "coverage:report": "nyc report --reporter=html --reporter=text",
     "coverage:check": "nyc check-coverage --lines 90 --functions 90 --branches 90 --statements 90",
-    "ci": "npm run lint && npm run compile && npm run test:coverage && npm run coverage:check",
+    "ci": "npm run lint && npm run compile && npm run pretest && npm run test:coverage && npm run coverage:check",
     "ci:build": "npm run compile && npm run package"
   },
   "devDependencies": {
