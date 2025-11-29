@@ -1,0 +1,255 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, enhancements, develop ]
+    paths:
+      - 'vscode-extension/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [ main, enhancements, develop ]
+    paths:
+      - 'vscode-extension/**'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'vscode-extension/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: vscode-extension
+        run: npm ci
+      
+      - name: Run linter
+        working-directory: vscode-extension
+        run: npm run lint
+
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'vscode-extension/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: vscode-extension
+        run: npm ci
+      
+      - name: Compile TypeScript
+        working-directory: vscode-extension
+        run: npm run compile
+      
+      - name: Package extension
+        working-directory: vscode-extension
+        run: npm run package
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-build-${{ matrix.os }}
+          path: vscode-extension/dist/
+          retention-days: 7
+
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'vscode-extension/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: vscode-extension
+        run: npm ci
+      
+      - name: Run unit tests
+        working-directory: vscode-extension
+        run: npm run test:unit
+      
+      - name: Run integration tests (Linux)
+        if: runner.os == 'Linux'
+        working-directory: vscode-extension
+        run: xvfb-run -a npm test
+        continue-on-error: false
+      
+      - name: Run integration tests (macOS/Windows)
+        if: runner.os != 'Linux'
+        working-directory: vscode-extension
+        run: npm test
+        continue-on-error: false
+
+  coverage:
+    name: Code Coverage Enforcement
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'vscode-extension/package-lock.json'
+      
+      - name: Install dependencies
+        working-directory: vscode-extension
+        run: npm ci
+      
+      - name: Run tests with coverage
+        working-directory: vscode-extension
+        run: npm run test:coverage
+      
+      - name: Check coverage thresholds (90%+ enforcement)
+        working-directory: vscode-extension
+        run: |
+          echo "Checking coverage meets 90% threshold..."
+          npm run coverage:check
+      
+      - name: Generate coverage report
+        if: always()
+        working-directory: vscode-extension
+        run: npm run coverage:report
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./vscode-extension/coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+      
+      - name: Upload coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: vscode-extension/coverage/
+          retention-days: 30
+      
+      - name: Comment coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const coveragePath = 'vscode-extension/coverage/lcov.info';
+            
+            if (fs.existsSync(coveragePath)) {
+              const coverage = fs.readFileSync(coveragePath, 'utf8');
+              // Parse coverage summary
+              const lines = coverage.split('\n');
+              let totalLines = 0;
+              let coveredLines = 0;
+              
+              lines.forEach(line => {
+                if (line.startsWith('LF:')) totalLines += parseInt(line.split(':')[1]);
+                if (line.startsWith('LH:')) coveredLines += parseInt(line.split(':')[1]);
+              });
+              
+              const percentage = totalLines > 0 ? ((coveredLines / totalLines) * 100).toFixed(2) : 0;
+              const status = percentage >= 90 ? '✅' : '❌';
+              
+              const comment = `## ${status} Coverage Report
+              
+              - **Coverage**: ${percentage}%
+              - **Covered Lines**: ${coveredLines}/${totalLines}
+              - **Threshold**: 90%
+              - **Status**: ${percentage >= 90 ? 'PASS' : 'FAIL - Below threshold'}
+              
+              [View detailed coverage report in artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+              `;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
+
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    needs: [lint, build, test, coverage]
+    if: always()
+    
+    steps:
+      - name: Check job results
+        run: |
+          echo "Lint: ${{ needs.lint.result }}"
+          echo "Build: ${{ needs.build.result }}"
+          echo "Test: ${{ needs.test.result }}"
+          echo "Coverage: ${{ needs.coverage.result }}"
+          
+          if [[ "${{ needs.lint.result }}" != "success" ]] || \
+             [[ "${{ needs.build.result }}" != "success" ]] || \
+             [[ "${{ needs.test.result }}" != "success" ]] || \
+             [[ "${{ needs.coverage.result }}" != "success" ]]; then
+            echo "❌ Quality gate failed!"
+            exit 1
+          fi
+          
+          echo "✅ Quality gate passed!"
+      
+      - name: Post status
+        if: always()
+        run: |
+          if [[ "${{ needs.lint.result }}" == "success" ]] && \
+             [[ "${{ needs.build.result }}" == "success" ]] && \
+             [[ "${{ needs.test.result }}" == "success" ]] && \
+             [[ "${{ needs.coverage.result }}" == "success" ]]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+            echo "## ✅ All Quality Checks Passed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Linting" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Multi-platform builds" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Tests" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ 90%+ code coverage" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+            echo "## ❌ Quality Gate Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- Lint: ${{ needs.lint.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Build: ${{ needs.build.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Test: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Coverage: ${{ needs.coverage.result }}" >> $GITHUB_STEP_SUMMARY
+          fi

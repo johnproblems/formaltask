@@ -30,7 +30,10 @@
     "test:coverage": "npm run compile-tests && nyc mocha",
     "test:watch": "npm run compile-tests && mocha --watch",
     "coverage": "npm run test:coverage",
-    "coverage:report": "nyc report --reporter=html --reporter=text"
+    "coverage:report": "nyc report --reporter=html --reporter=text",
+    "coverage:check": "nyc check-coverage --lines 90 --functions 90 --branches 90 --statements 90",
+    "ci": "npm run lint && npm run compile && npm run test:coverage && npm run coverage:check",
+    "ci:build": "npm run compile && npm run package"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
