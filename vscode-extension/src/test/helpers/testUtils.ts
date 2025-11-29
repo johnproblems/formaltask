@@ -183,11 +183,11 @@ export function spyOnConsole(sandbox: sinon.SinonSandbox): {
 	error: sinon.SinonSpy;
 	warn: sinon.SinonSpy;
 } {
-	// In VS Code test environment, use stubs instead of spies
-	// to avoid wrapping issues with console methods
-	const logSpy = sandbox.stub(console, 'log');
-	const errorSpy = sandbox.stub(console, 'error');
-	const warnSpy = sandbox.stub(console, 'warn');
+	// In VS Code test environment, use stubs with callThrough
+	// This allows us to track calls while still executing the original function
+	const logSpy = sandbox.stub(console, 'log').callThrough();
+	const errorSpy = sandbox.stub(console, 'error').callThrough();
+	const warnSpy = sandbox.stub(console, 'warn').callThrough();
 	
 	return {
 		log: logSpy,
