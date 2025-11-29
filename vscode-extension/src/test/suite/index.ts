@@ -12,13 +12,13 @@ export async function run(): Promise<void> {
 
 	const testsRoot = path.resolve(__dirname, '.');
 
-	// Glob pattern for test files
-	const files = await glob('**/**.test.js', { cwd: testsRoot });
+	// Find all test files
+	const files = await glob('**.test.js', { cwd: testsRoot });
 
 	// Add files to the test suite
 	files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
 
-	// Run the mocha test
+	// Run the tests
 	return new Promise<void>((resolve, reject) => {
 		try {
 			mocha.run((failures: number) => {
