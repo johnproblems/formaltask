@@ -1,17 +1,18 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as sinon from 'sinon';
+import { suite, test, suiteSetup, suiteTeardown } from 'mocha';
 import { activate, deactivate } from '../../extension';
 import { createMockContext, createSandbox, spyOnConsole } from '../helpers/testUtils';
 
 suite('Extension Test Suite', () => {
 	let sandbox: sinon.SinonSandbox;
 
-	setup(() => {
+	suiteSetup(() => {
 		sandbox = createSandbox();
 	});
 
-	teardown(() => {
+	suiteTeardown(() => {
 		sandbox.restore();
 	});
 
