@@ -5,8 +5,6 @@ import * as vscode from 'vscode';
  * The extension is activated the very first time the command is executed.
  */
 export function activate(_context: vscode.ExtensionContext): void {
-	console.log('CCPM extension is now active');
-
 	// Register commands here
 	// Example:
 	// const disposable = vscode.commands.registerCommand('ccpm.helloWorld', () => {
@@ -19,5 +17,5 @@ export function activate(_context: vscode.ExtensionContext): void {
  * This method is called when the extension is deactivated.
  */
 export function deactivate(): void {
-	console.log('CCPM extension is now deactivated');
+	// Cleanup resources if needed
 }
