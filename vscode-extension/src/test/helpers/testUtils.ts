@@ -183,11 +183,11 @@ export function spyOnConsole(sandbox: sinon.SinonSandbox): {
 	error: sinon.SinonSpy;
 	warn: sinon.SinonSpy;
 } {
-	// In VS Code test environment, console methods might not exist
-	// Use stub if property doesn't exist, spy if it does
-	const logSpy = console.log ? sandbox.spy(console, 'log') : sandbox.stub(console, 'log');
-	const errorSpy = console.error ? sandbox.spy(console, 'error') : sandbox.stub(console, 'error');
-	const warnSpy = console.warn ? sandbox.spy(console, 'warn') : sandbox.stub(console, 'warn');
+	// In VS Code test environment, use stubs instead of spies
+	// to avoid wrapping issues with console methods
+	const logSpy = sandbox.stub(console, 'log');
+	const errorSpy = sandbox.stub(console, 'error');
+	const warnSpy = sandbox.stub(console, 'warn');
 	
 	return {
 		log: logSpy,
