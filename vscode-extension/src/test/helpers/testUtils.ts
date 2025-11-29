@@ -183,6 +183,17 @@ export function spyOnConsole(sandbox: sinon.SinonSandbox): {
 	error: sinon.SinonSpy;
 	warn: sinon.SinonSpy;
 } {
+	// Ensure console methods exist before spying
+	if (!console.log) {
+		console.log = () => { /* noop */ };
+	}
+	if (!console.error) {
+		console.error = () => { /* noop */ };
+	}
+	if (!console.warn) {
+		console.warn = () => { /* noop */ };
+	}
+	
 	return {
 		log: sandbox.spy(console, 'log'),
 		error: sandbox.spy(console, 'error'),
