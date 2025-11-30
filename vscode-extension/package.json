@@ -3,6 +3,27 @@
   "displayName": "CCPM - Context-Centric Project Manager",
   "description": "VSCode extension for Context-Centric Project Management with AI-powered workflow automation",
   "version": "0.1.0",
+  "author": "johnproblems (https://github.com/johnproblems)",
+  "publisher": "formaltask",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johnproblems/formaltask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johnproblems/formaltask/issues"
+  },
+  "homepage": "https://github.com/johnproblems/formaltask#readme",
+  "keywords": [
+    "vscode",
+    "extension",
+    "project-management",
+    "ai",
+    "claude",
+    "workflow",
+    "automation",
+    "task-management"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },
