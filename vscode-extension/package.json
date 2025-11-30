@@ -40,7 +40,8 @@
     "theme": "dark"
   },
   "activationEvents": [
-    "workspaceContains:.claude/epics"
+    "workspaceContains:.claude/epics",
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -193,8 +194,8 @@
     "keybindings": [
       {
         "command": "ccpm.showEpicStatus",
-        "key": "ctrl+shift+e",
-        "mac": "cmd+shift+e",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
         "when": "workspaceFolderCount > 0"
       },
       {
